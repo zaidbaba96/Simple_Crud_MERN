@@ -45,47 +45,48 @@ const formOptions = { resolver: yupResolver(validationSchema) };
 const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
     const isEnabled = user.name.length > 0 && user.email.length > 0 && user.phone.length > 0 && user.password.length > 0 && user.confirmPassword.length;
-  const PostData = async ()=>{
 
 
-    const {name , email , phone , work , password , confirmPassword} = user;
+const PostData = async (e)=>{
 
-    const res = await fetch("https://backend-node-app.herokuapp.com/register", {
-      method:"POST",
-      headers:{"Content-Type" : "application/json"},
-      body:JSON.stringify({
-        name:name , email:email , phone:phone , work:work , password:password, confirmPassword:confirmPassword
-      })
-    })
-    const data = await res.json();
+        e.preventDefault();
     
-
-    if (res.status === 422 || !data  ){
-        swal({
+        const {name , email , phone , work , password , confirmPassword} = user;
+    
+        const res = await fetch("https://backend-node-app.herokuapp.com/register", {
+          method:"POST",
+          headers:{"Content-Type" : "application/json"},
+          body:JSON.stringify({
+            name:name , email:email , phone:phone , work:work , password:password, confirmPassword:confirmPassword
+          })
+        })
+        const data = await res.json();
+        
+    
+        if (res.status === 422 || !data  ){
+          swal({
             title: "Error!",
-            text: "user not Found",
+            text: "Invalid",
             icon: "warning",
             timer: 2000,
             button: false
           })
-      //window.alert("Invalid Registration")
-      console.log("Invalid Registration")
-    }
-    else{
-        swal({
+          
+          console.log("Invalid Registration")
+        }
+        else{
+          swal({
             title: "Done!",
             text: "User Login Succesfully",
             icon: "success",
             timer: 2000,
             button: false
           })
-     // window.alert("Registration Successfully")
-      console.log("Registration Successfully")
-
-      history.push("/login");
-    }
-  }
-
+          console.log("Registration Successfully")
+    
+        //   history.push("/login");
+        }
+      }
     return(
         <>
             <div className="row d-flex justify-content-center align-items-center h-100">
