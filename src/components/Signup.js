@@ -47,9 +47,7 @@ const { register, handleSubmit, formState } = useForm(formOptions);
     const isEnabled = user.name.length > 0 && user.email.length > 0 && user.phone.length > 0 && user.password.length > 0 && user.confirmPassword.length;
 
 
-const PostData = async (e)=>{
-
-        e.preventDefault();
+const PostData = async ()=>{
     
         const {name , email , phone , work , password , confirmPassword} = user;
     
